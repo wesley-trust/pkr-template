@@ -1,0 +1,21 @@
+# Trigger builds on commits and merges to all branches, excluding specified branches
+trigger:
+  batch: true
+  branches:
+    include:
+    - '*'
+  paths:
+    exclude:
+    - README.md
+
+# Trigger builds on PRs to branch
+pr:
+  branches:
+    include:
+    - '*'
+  paths:
+    exclude:
+    - README.md
+
+extends:
+  template: ./Shared/azure-pipelines.yml

@@ -1,0 +1,21 @@
+jobs:
+- job: Plan
+  displayName: 'Create Plan'
+  dependsOn: New
+  condition: or(eq(dependencies.Import.result,'Succeeded'), eq(dependencies.New.result,'Succeeded'))
+  continueOnError: false
+  steps:
+  
+  # Checkout shared steps
+  - checkout: 'tfpipeline-shared'
+    displayName: 'Checkout shared Pipeline steps'
+    path: 's/pipeline/Shared/'
+
+  # Run common steps
+  - template: ./Steps/common.yml@tfpipeline-shared
+
+  # Run steps
+  - template: ./Steps/plan.yml@tfpipeline-shared
+
+  # Run Packer steps
+  - template: ./Steps/packer/validate.yml@tfpipeline-shared

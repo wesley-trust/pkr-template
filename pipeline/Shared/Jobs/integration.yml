@@ -1,0 +1,20 @@
+jobs:
+
+- job: IntegrationTests
+  displayName: 'Integration Tests'
+  continueOnError: false
+  steps:
+
+  # Checkout shared steps
+  - checkout: 'tfpipeline-shared'
+    displayName: 'Checkout shared Pipeline steps'
+    path: 's/pipeline/Shared/'
+
+  # Run common steps
+  - template: ./Steps/common.yml@tfpipeline-shared
+
+  # Run Packer Integration steps
+  - template: ./Steps/packer/integration.yml@tfpipeline-shared
+
+  # Run Integration steps
+  - template: ./Steps/integration.yml@tfpipeline-shared

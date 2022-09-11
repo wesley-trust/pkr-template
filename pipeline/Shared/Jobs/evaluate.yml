@@ -1,0 +1,18 @@
+jobs:
+- job: Evaluate
+  displayName: 'Evaluate Plan'
+  dependsOn: Plan
+  condition: eq(dependencies.Plan.result,'Succeeded')
+  continueOnError: false
+  steps:
+  
+  # Checkout shared steps
+  - checkout: 'tfpipeline-shared'
+    displayName: 'Checkout shared Pipeline steps'
+    path: 's/pipeline/Shared/'
+
+  # Run common steps
+  - template: ./Steps/common.yml@tfpipeline-shared
+
+  # Run Plan Evaluation
+  - template: ./Steps/evaluate.yml@tfpipeline-shared

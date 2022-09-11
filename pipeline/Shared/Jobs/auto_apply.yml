@@ -1,0 +1,18 @@
+jobs:
+- job: AutoDeploy
+  continueOnError: true
+  steps:
+
+  # Checkout shared steps
+  - checkout: 'tfpipeline-shared'
+    displayName: 'Checkout shared Pipeline steps'
+    path: 's/pipeline/Shared/'
+
+  # Run common steps
+  - template: ./Steps/common.yml@tfpipeline-shared
+
+  # Run steps
+  - template: ./Steps/apply.yml@tfpipeline-shared
+
+  # Run Packer steps
+  - template: ./Steps/packer/build.yml@tfpipeline-shared
